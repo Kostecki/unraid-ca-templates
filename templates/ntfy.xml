@@ -13,8 +13,9 @@
 After installing, you can (optionally) configure the server by creating server.yml in the the appdata directory. Default config file is available at: https://github.com/binwiederhier/ntfy/blob/main/server/server.yml</Overview>
   <Category>Tools:</Category>
   <WebUI>http://[IP]:[PORT:80]/</WebUI>
-  <TemplateURL />
+  <TemplateURL>https://raw.githubusercontent.com/Kostecki/unraid-ca-templates/main/templates/ntfy.xml</TemplateURL>
   <Icon>https://github.com/binwiederhier/ntfy/raw/main/web/public/static/img/ntfy.png</Icon>
+  <ExtraParams>--restart unless-stopped</ExtraParams>
   <PostArgs>serve</PostArgs>
   <Config Name="Appdata" Target="/etc/ntfy" Default="" Mode="rw" Description="Directory for optional ntfy server config file: server.yml" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata/ntfy</Config>
   <Config Name="Cache" Target="/var/cache/ntfy" Default="" Mode="rw" Description="Cache location" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata/ntfy</Config>
