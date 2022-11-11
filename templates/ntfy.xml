@@ -18,7 +18,7 @@ curl -d "Backup successful &#x1F600;" ntfy.sh/mytopic</Overview>
   <Icon>https://github.com/binwiederhier/ntfy/raw/main/web/public/static/img/ntfy.png</Icon>
   <ExtraParams>--restart unless-stopped</ExtraParams>
   <PostArgs>serve</PostArgs>
-  <Config Name="Host Port 1" Target="80" Default="" Mode="tcp" Description="" Type="Port" Display="always" Required="false" Mask="false">9050</Config>
+  <Config Name="Host Port 1" Target="80" Default="" Mode="tcp" Description="" Type="Port" Display="always" Required="false" Mask="false">8080</Config>
   <Config Name="NTFY_BASE_URL" Target="NTFY_BASE_URL" Default="" Mode="" Description="" Type="Variable" Display="always" Required="false" Mask="false">http://192.168.1.5:9050</Config>
   <Config Name="NTFY_WEB_ROOT" Target="NTFY_WEB_ROOT" Default="app" Mode="" Description="Sets web root to landing page (home), web app (app) or disables the web app entirely (disable)." Type="Variable" Display="always" Required="false" Mask="false">app</Config>
   <Config Name="NTFY_UPSTREAM_BASE_URL" Target="NTFY_UPSTREAM_BASE_URL" Default="https://ntfy.sh" Mode="" Description="Forward poll request to an upstream server, this is needed for iOS push notifications for self-hosted servers." Type="Variable" Display="always" Required="false" Mask="false">https://ntfy.sh</Config>
