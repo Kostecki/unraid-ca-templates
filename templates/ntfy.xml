@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Container version="2">
-  <Name>ntfy</Name>
+  <Name>Ntfy</Name>
   <Repository>binwiederhier/ntfy</Repository>
   <Registry>https://hub.docker.com/r/binwiederhier/ntfy</Registry>
   <Network>bridge</Network>
@@ -10,16 +10,29 @@
   <Project>https://ntfy.sh/</Project>
   <Overview>ntfy (pronounce: notify) is a simple HTTP-based pub-sub notification service. It allows you to send notifications to your phone or desktop via scripts from any computer, entirely without signup, cost or setup. It's also open source if you want to run your own.&#xD;
 &#xD;
-After installing, you can (optionally) configure the server by creating server.yml in the the appdata directory. Default config file is available at: https://github.com/binwiederhier/ntfy/blob/main/server/server.yml</Overview>
+Publishing a message to a topic is as simple as:&#xD;
+curl -d "Backup successful &#x1F600;" ntfy.sh/mytopic</Overview>
   <Category>Tools:</Category>
   <WebUI>http://[IP]:[PORT:80]/</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/Kostecki/unraid-ca-templates/main/templates/ntfy.xml</TemplateURL>
   <Icon>https://github.com/binwiederhier/ntfy/raw/main/web/public/static/img/ntfy.png</Icon>
   <ExtraParams>--restart unless-stopped</ExtraParams>
   <PostArgs>serve</PostArgs>
-  <Config Name="Appdata" Target="/etc/ntfy" Default="" Mode="rw" Description="Directory for optional ntfy server config file: server.yml" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata/ntfy</Config>
-  <Config Name="Cache" Target="/var/cache/ntfy" Default="" Mode="rw" Description="Cache location" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata/ntfy</Config>
   <Config Name="Host Port 1" Target="80" Default="" Mode="tcp" Description="" Type="Port" Display="always" Required="false" Mask="false">9050</Config>
-  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="" Type="Variable" Display="always" Required="false" Mask="false">99</Config>
-  <Config Name="PGID" Target="PGID" Default="" Mode="" Description="" Type="Variable" Display="always" Required="false" Mask="false">100</Config>
+  <Config Name="NTFY_BASE_URL" Target="NTFY_BASE_URL" Default="" Mode="" Description="" Type="Variable" Display="always" Required="false" Mask="false">http://192.168.1.5:9050</Config>
+  <Config Name="NTFY_WEB_ROOT" Target="NTFY_WEB_ROOT" Default="app" Mode="" Description="Sets web root to landing page (home), web app (app) or disables the web app entirely (disable)." Type="Variable" Display="always" Required="false" Mask="false">app</Config>
+  <Config Name="NTFY_UPSTREAM_BASE_URL" Target="NTFY_UPSTREAM_BASE_URL" Default="https://ntfy.sh" Mode="" Description="Forward poll request to an upstream server, this is needed for iOS push notifications for self-hosted servers." Type="Variable" Display="always" Required="false" Mask="false">https://ntfy.sh</Config>
+  <Config Name="NTFY_CACHE_FILE" Target="NTFY_CACHE_FILE" Default="/config/cache.db" Mode="" Description="If set, messages are cached in a local SQLite database instead of only in-memory. This allows for service restarts without losing messages in support of the since= parameter." Type="Variable" Display="always" Required="false" Mask="false">/config/cache.db</Config>
+  <Config Name="NTFY_CACHE_DURATION" Target="NTFY_CACHE_DURATION" Default="12h" Mode="" Description="Duration for which messages will be buffered before they are deleted (e.g. 30s, 20m, 20h). This is required to support the since=... and poll=1 parameter. Set this to 0 to disable the cache entirely." Type="Variable" Display="always" Required="false" Mask="false">12h</Config>
+  <Config Name="NTFY_ATTACHMENT_CACHE_DIR" Target="NTFY_ATTACHMENT_CACHE_DIR" Default="/config/attachments" Mode="" Description="Cache directory for attached files. To enable attachments, this has to be set.&#13;&#10;&#13;&#10;NOTE: If NTFY_ATTACHMENT_CACHE_DIR is set then NFTY_BASE_URL is also required." Type="Variable" Display="always" Required="false" Mask="false">/config/attachments</Config>
+  <Config Name="NTFY_ATTACHMENT_TOTAL_SIZE_LIMIT" Target="NTFY_ATTACHMENT_TOTAL_SIZE_LIMIT" Default="5G" Mode="" Description="Limit of the on-disk attachment cache directory (e.g. 300k, 2M, 100M). If the limits is exceeded, new attachments will be rejected." Type="Variable" Display="always" Required="false" Mask="false">5G</Config>
+  <Config Name="NTFY_ATTACHMENT_FILE_SIZE_LIMIT" Target="NTFY_ATTACHMENT_FILE_SIZE_LIMIT" Default="15M" Mode="" Description="Per-file attachment size limit (e.g. 300k, 2M, 100M). Larger attachment will be rejected." Type="Variable" Display="always" Required="false" Mask="false">15M</Config>
+  <Config Name="NTFY_ATTACHMENT_EXPIRY_DURATION" Target="NTFY_ATTACHMENT_EXPIRY_DURATION" Default="3h" Mode="" Description="Duration after which uploaded attachments will be deleted (e.g. 30s, 20m, 20h)." Type="Variable" Display="always" Required="false" Mask="false">3h</Config>
+  <Config Name="NTFY_SMTP_SENDER_ADDR" Target="NTFY_SMTP_SENDER_ADDR" Default="" Mode="" Description="SMTP server address to allow email sending." Type="Variable" Display="always" Required="false" Mask="false" />
+  <Config Name="NTFY_SMTP_SENDER_USER" Target="NTFY_SMTP_SENDER_USER" Default="" Mode="" Description="SMTP user; only used if e-mail sending is enabled." Type="Variable" Display="always" Required="false" Mask="false" />
+  <Config Name="NTFY_SMTP_SENDER_PASS" Target="NTFY_SMTP_SENDER_PASS" Default="" Mode="" Description="SMTP password; only used if e-mail sending is enabled." Type="Variable" Display="always" Required="false" Mask="false" />
+  <Config Name="NTFY_SMTP_SENDER_FROM" Target="NTFY_SMTP_SENDER_FROM" Default="" Mode="" Description="SMTP sender e-mail address; only used if e-mail sending is enabled." Type="Variable" Display="always" Required="false" Mask="false" />
+  <Config Name="NTFY_SMTP_SERVER_ADDR_PREFIX" Target="NTFY_SMTP_SERVER_ADDR_PREFIX" Default="" Mode="" Description="Optional prefix for the e-mail addresses to prevent spam, e.g. ntfy-." Type="Variable" Display="always" Required="false" Mask="false" />
+  <Config Name="NTFY_LOG_LEVEL" Target="NTFY_LOG_LEVEL" Default="info" Mode="" Description="Set log level. Options: INFO, WARN, ERROR, DEBUG or TRACE" Type="Variable" Display="always" Required="false" Mask="false">info</Config>
+  <Config Name="Appdata" Target="/config" Default="/mnt/user/appdata/ntfy" Mode="rw" Description="" Type="Path" Display="advanced" Required="true" Mask="false">/mnt/user/appdata/ntfy</Config>
 </Container>
