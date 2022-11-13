@@ -11,7 +11,15 @@
   <Overview>ntfy (pronounce: notify) is a simple HTTP-based pub-sub notification service. It allows you to send notifications to your phone or desktop via scripts from any computer, entirely without signup, cost or setup. It's also open source if you want to run your own.&#xD;
 &#xD;
 Publishing a message to a topic is as simple as:&#xD;
-curl -d "Backup successful &#x1F600;" ntfy.sh/mytopic</Overview>
+curl -d "Backup successful &#x1F600;" ntfy.sh/mytopic&#xD;
+&#xD;
+By default, the ntfy server is open for everyone, meaning everyone can read and write to any topic (this is how ntfy.sh is configured). To restrict access to your own server, you can optionally configure authentication and authorization using NTFY_AUTH_FILE and NTFY_AUTH_DEFAULT_ACCESS.&#xD;
+After that, simply create an admin user:&#xD;
+ntfy user add --role=admin phil&#xD;
+password: mypass&#xD;
+confirm: mypass&#xD;
+user phil added with role admin&#xD;
+Once you've done that, you can publish and subscribe using Basic Auth with the given username/password.</Overview>
   <Category>Tools:</Category>
   <WebUI>http://[IP]:[PORT:80]/</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/Kostecki/unraid-ca-templates/main/templates/ntfy.xml</TemplateURL>
@@ -19,11 +27,13 @@ curl -d "Backup successful &#x1F600;" ntfy.sh/mytopic</Overview>
   <ExtraParams>--restart unless-stopped</ExtraParams>
   <PostArgs>serve</PostArgs>
   <Config Name="Host Port 1" Target="80" Default="" Mode="tcp" Description="" Type="Port" Display="always" Required="false" Mask="false">8080</Config>
-  <Config Name="NTFY_BASE_URL" Target="NTFY_BASE_URL" Default="" Mode="" Description="" Type="Variable" Display="always" Required="false" Mask="false">http://192.168.1.5:9050</Config>
+  <Config Name="NTFY_BASE_URL" Target="NTFY_BASE_URL" Default="" Mode="" Description="" Type="Variable" Display="always" Required="false" Mask="false">https://ntfy.israndom.win</Config>
   <Config Name="NTFY_WEB_ROOT" Target="NTFY_WEB_ROOT" Default="app" Mode="" Description="Sets web root to landing page (home), web app (app) or disables the web app entirely (disable)." Type="Variable" Display="always" Required="false" Mask="false">app</Config>
   <Config Name="NTFY_UPSTREAM_BASE_URL" Target="NTFY_UPSTREAM_BASE_URL" Default="https://ntfy.sh" Mode="" Description="Forward poll request to an upstream server, this is needed for iOS push notifications for self-hosted servers." Type="Variable" Display="always" Required="false" Mask="false">https://ntfy.sh</Config>
   <Config Name="NTFY_CACHE_FILE" Target="NTFY_CACHE_FILE" Default="/config/cache.db" Mode="" Description="If set, messages are cached in a local SQLite database instead of only in-memory. This allows for service restarts without losing messages in support of the since= parameter." Type="Variable" Display="always" Required="false" Mask="false">/config/cache.db</Config>
   <Config Name="NTFY_CACHE_DURATION" Target="NTFY_CACHE_DURATION" Default="12h" Mode="" Description="Duration for which messages will be buffered before they are deleted (e.g. 30s, 20m, 20h). This is required to support the since=... and poll=1 parameter. Set this to 0 to disable the cache entirely." Type="Variable" Display="always" Required="false" Mask="false">12h</Config>
+  <Config Name="NTFY_AUTH_FILE" Target="NTFY_AUTH_FILE" Default="/config/user.db" Mode="" Description="Auth database file used for access control. If set, enables authentication and access control." Type="Variable" Display="always" Required="false" Mask="false">/config/user.db</Config>
+  <Config Name="NTFY_AUTH_DEFAULT_ACCESS" Target="NTFY_AUTH_DEFAULT_ACCESS" Default="read-write" Mode="" Description="Default permissions if no matching entries in the auth database are found. Default is read-write." Type="Variable" Display="always" Required="false" Mask="false">deny-all</Config>
   <Config Name="NTFY_ATTACHMENT_CACHE_DIR" Target="NTFY_ATTACHMENT_CACHE_DIR" Default="/config/attachments" Mode="" Description="Cache directory for attached files. To enable attachments, this has to be set.&#13;&#10;&#13;&#10;NOTE: If NTFY_ATTACHMENT_CACHE_DIR is set then NFTY_BASE_URL is also required." Type="Variable" Display="always" Required="false" Mask="false">/config/attachments</Config>
   <Config Name="NTFY_ATTACHMENT_TOTAL_SIZE_LIMIT" Target="NTFY_ATTACHMENT_TOTAL_SIZE_LIMIT" Default="5G" Mode="" Description="Limit of the on-disk attachment cache directory (e.g. 300k, 2M, 100M). If the limits is exceeded, new attachments will be rejected." Type="Variable" Display="always" Required="false" Mask="false">5G</Config>
   <Config Name="NTFY_ATTACHMENT_FILE_SIZE_LIMIT" Target="NTFY_ATTACHMENT_FILE_SIZE_LIMIT" Default="15M" Mode="" Description="Per-file attachment size limit (e.g. 300k, 2M, 100M). Larger attachment will be rejected." Type="Variable" Display="always" Required="false" Mask="false">15M</Config>
