@@ -1,6 +1,6 @@
 # Unraid CA Templates
 Community Applications Docker Templates for Unraid
 
-## Current Applications
+## Applications
 
 - ntfy - https://ntfy.sh/
