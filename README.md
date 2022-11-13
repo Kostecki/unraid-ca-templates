@@ -1,5 +1,5 @@
-# unRaid CA Templates
-Community Applications Docker Templates for unRAID
+# Unraid CA Templates
+Community Applications Docker Templates for Unraid
 
 ## Current Applications
 
