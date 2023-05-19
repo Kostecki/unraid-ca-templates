@@ -23,7 +23,7 @@ Once you've done that, you can publish and subscribe using Basic Auth with the g
   <Category>Tools:</Category>
   <WebUI>http://[IP]:[PORT:80]/</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/Kostecki/unraid-ca-templates/main/templates/ntfy.xml</TemplateURL>
-  <Icon>https://github.com/binwiederhier/ntfy/raw/main/web/public/static/img/ntfy.png</Icon>
+  <Icon>https://raw.githubusercontent.com/binwiederhier/ntfy/main/docs/static/img/ntfy.png</Icon>
   <ExtraParams>--restart unless-stopped</ExtraParams>
   <PostArgs>serve</PostArgs>
   <Config Name="Host Port 1" Target="80" Default="" Mode="tcp" Description="" Type="Port" Display="always" Required="false" Mask="false">8080</Config>
